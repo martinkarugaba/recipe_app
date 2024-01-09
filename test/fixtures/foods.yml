@@ -5,11 +5,11 @@ one:
   measurement_unit: MyString
   price: 9.99
   quantity: 1
-  user: one
+  user_id: 1
 
 two:
   name: MyString
   measurement_unit: MyString
   price: 9.99
   quantity: 1
-  user: two
+  user_id: 1
