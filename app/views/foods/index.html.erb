@@ -1,14 +1,38 @@
-<p style="color: green"><%= notice %></p>
+<div class="container">
+  <div class="row justify-content-center mt-4">
+    <div class="col-lg-10">
+      <div class="text-center mb-4 mt-3">
+        <%= link_to 'Add new food', new_food_path, class: "btn btn-primary" %>
+      </div>
 
-<h1>Foods</h1>
-
-<div id="foods">
-  <% @foods.each do |food| %>
-    <%= render food %>
-    <p>
-      <%= link_to "Show this food", food %>
-    </p>
-  <% end %>
+      <% if @foods.any? %>
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Name</th>
+                    <th>Measurement Unit</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Task</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @foods.each do |food| %>
+                    <%= render partial: 'food', locals: { food: food } %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="text-center">
+          <p>No foods available.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New food", new_food_path %>
