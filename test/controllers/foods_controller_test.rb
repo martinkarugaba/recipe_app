@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class FoodsControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+
   setup do
     @food = foods(:one)
   end
