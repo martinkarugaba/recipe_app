@@ -9,4 +9,5 @@ class User < ApplicationRecord
          :validatable
 
   has_many :foods, dependent: :destroy
+  has_many :recipes
 end
