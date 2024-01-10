@@ -5,7 +5,7 @@ class RecipesController < ApplicationController
   # GET /recipes or /recipes.json
   def index
     if user_signed_in?
-      @recipes = Recipe.all.order(created_at: :desc)
+      @recipes = Recipe.includes(:user).order(created_at: :desc)
     else
       flash[:alert] = 'You need to sign up or sign in before continuing.'
       redirect_to new_user_registration_path
