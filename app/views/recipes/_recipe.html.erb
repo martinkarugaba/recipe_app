@@ -1,17 +1,17 @@
-<div id="<%= dom_id recipe %>">
+<div id="<%= dom_id(recipe) %>">
   <p>
     <strong>Name:</strong>
     <%= recipe.name %>
   </p>
 
   <p>
-    <strong>Preparation time:</strong>
-    <%= recipe.preparation_time %>
+    <strong>Preparation Time:</strong>
+    <%= recipe.preparation_time %> minutes
   </p>
 
   <p>
-    <strong>Cooking time:</strong>
-    <%= recipe.cooking_time %>
+    <strong>Cooking Time:</strong>
+    <%= recipe.cooking_time %> minutes
   </p>
 
   <p>
@@ -21,7 +21,10 @@
 
   <p>
     <strong>Public:</strong>
-    <%= recipe.public %>
+    <%= recipe.public ? 'Yes' : 'No' %>
   </p>
 
+  <p>
+    <%= link_to "Show this recipe", recipe_path(recipe), class: "btn btn-primary btn-sm" %>
+  </p>
 </div>

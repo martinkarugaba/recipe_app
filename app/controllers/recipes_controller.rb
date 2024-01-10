@@ -5,7 +5,7 @@ class RecipesController < ApplicationController
   # GET /recipes or /recipes.json
   def index
     if user_signed_in?
-      @recipes = current_user.recipes.all
+      @recipes = Recipe.all.order(created_at: :desc)
     else
       flash[:alert] = 'You need to sign up or sign in before continuing.'
       redirect_to new_user_registration_path
@@ -51,30 +51,36 @@ class RecipesController < ApplicationController
     end
   end
 
-  # DELETE /recipes/1 or /recipes/1.json
   def destroy
-    @recipe.destroy
+    @recipe = Recipe.find(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
-      format.json { head :no_content }
+    if @recipe.user == current_user
+      @recipe.destroy
+      respond_to do |format|
+        format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to recipes_url, alert: 'You do not have permission to delete this recipe.'
     end
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_recipe
-    @recipe = current_user.recipes.find(params[:id])
+    @recipe = current_user.recipes.find_by(id: params[:id])
+
+    return if @recipe
+
+    redirect_to recipes_url, alert: 'Recipe not found or you do not have permission to access this recipe.'
   end
 
   def authorize_user!
-    return if @recipe.user == current_user
+    return unless @recipe.user != current_user
 
     redirect_to recipes_url, alert: 'You do not have permission to perform this action.'
   end
 
-  # Only allow a list of trusted parameters through.
   def recipe_params
     params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
   end
