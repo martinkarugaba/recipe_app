@@ -10,13 +10,10 @@ class FoodsController < ApplicationController
       return
     end
 
-    @foods = Food.all
+    @foods = Food.includes(:user, :recipes).all
   end
 
-  # GET /foods/1 or /foods/1.json
-  def show
-    @food = Food.find(params[:id])
-  end
+  def show; end
 
   # GET /foods/new
   def new
@@ -68,12 +65,10 @@ class FoodsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_food
-    @food = Food.find(params[:id])
+    @food = Food.includes(:user, :recipes).find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def food_params
     params.require(:food).permit(:name, :measurement_unit, :price, :quantity)
   end
