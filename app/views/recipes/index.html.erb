@@ -1,0 +1,36 @@
+<h1 class="text-center">Recipes</h1>
+
+<div class="container mt-3">
+  <div class="text-right mb-3">
+    <%= link_to "Add New Recipe", new_user_recipe_path(current_user), class: "btn btn-primary" %>
+  </div>
+
+  <% if @recipes.any? %>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recipes.each do |recipe| %>
+          <tr>
+            <td><%= recipe.name %></td>
+            
+            <td><%= recipe.description %></td>
+            
+            <td>
+            <%= link_to "Remove", recipe, method: :delete, data: { confirm: 'Are you sure?'}, class: "btn btn-danger btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="text-center">
+      <p>No recipes found.</p>
+    </div>
+  <% end %>
+</div>

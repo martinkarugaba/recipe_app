@@ -1,16 +1,19 @@
 class FoodsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_food, only: %i[show edit update destroy]
 
   # GET /foods or /foods.json
   def index
-    @foods = Food.all
+    unless user_signed_in?
+      flash[:alert] = 'You need to sign up or sign in before continuing.'
+      redirect_to new_user_registration_path
+      return
+    end
+
+    @foods = Food.includes(:user, :recipes).all
   end
 
-  # GET /foods/1 or /foods/1.json
-  def show
-    @food = Food.find(params[:id])
-  end
+  def show; end
 
   # GET /foods/new
   def new
@@ -22,7 +25,7 @@ class FoodsController < ApplicationController
 
   # POST /foods or /foods.json
   def create
-    @food = current_user.foods.new(food_params) # Associate the food with the current user
+    @food = current_user.foods.new(food_params)
 
     respond_to do |format|
       if @food.save
@@ -48,24 +51,24 @@ class FoodsController < ApplicationController
     end
   end
 
-  # DELETE /foods/1 or /foods/1.json
   def destroy
-    @food.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to foods_url, notice: 'Food was successfully destroyed.' }
-      format.json { head :no_content }
+    if @food.user == current_user
+      @food.destroy!
+      respond_to do |format|
+        format.html { redirect_to foods_url, notice: 'Food was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to foods_url, alert: 'You do not have permission to delete this food.'
     end
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_food
-    @food = Food.find(params[:id])
+    @food = Food.includes(:user, :recipes).find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def food_params
     params.require(:food).permit(:name, :measurement_unit, :price, :quantity)
   end
