@@ -72,7 +72,7 @@ class RecipesController < ApplicationController
 
     return if @recipe
 
-    redirect_to recipes_url, alert: 'Recipe not found or you do not have permission to access this recipe.'
+    redirect_to recipes_url, alert: 'You do not have permission to access this recipe.'
   end
 
   def authorize_user!
