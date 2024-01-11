@@ -69,7 +69,7 @@ Clone the project into your desired folder by using this command:
 ```sh
 git clone https://github.com/martinkarugaba/recipe_app.git
 
-cd Rails-blog
+cd recipe_app
 ```
 
 ### Install
