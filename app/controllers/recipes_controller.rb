@@ -2,14 +2,9 @@ class RecipesController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_recipe, only: %i[show edit update destroy]
   before_action :authorize_user!, only: %i[edit update destroy]
-  # GET /recipes or /recipes.json
+
   def index
-    if user_signed_in?
-      @recipes = Recipe.includes(:user).order(created_at: :desc)
-    else
-      flash[:alert] = 'You need to sign up or sign in before continuing.'
-      redirect_to new_user_registration_path
-    end
+    @recipes = Recipe.includes(:user).order(created_at: :desc)
   end
 
   # GET /recipes/1 or /recipes/1.json
@@ -68,11 +63,13 @@ class RecipesController < ApplicationController
   private
 
   def set_recipe
-    @recipe = current_user.recipes.find_by(id: params[:id])
+    if current_user
+      @recipe = current_user.recipes.find_by(id: params[:id])
 
-    return if @recipe
-
-    redirect_to recipes_url, alert: 'You do not have permission to access this recipe.'
+      redirect_to recipes_url, alert: 'You do not have permission to access this recipe.' unless @recipe
+    else
+      redirect_to new_user_session_path, alert: 'You need to sign in to perform this action.'
+    end
   end
 
   def authorize_user!

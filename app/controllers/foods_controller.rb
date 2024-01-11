@@ -4,15 +4,10 @@ class FoodsController < ApplicationController
 
   # GET /foods or /foods.json
   def index
-    unless user_signed_in?
-      flash[:alert] = 'You need to sign up or sign in before continuing.'
-      redirect_to new_user_registration_path
-      return
-    end
-
     @foods = Food.includes(:user, :recipes).all
   end
 
+  # GET /foods/1 or /foods/1.json
   def show; end
 
   # GET /foods/new
@@ -51,6 +46,7 @@ class FoodsController < ApplicationController
     end
   end
 
+  # DELETE /foods/1 or /foods/1.json
   def destroy
     if @food.user == current_user
       @food.destroy!
