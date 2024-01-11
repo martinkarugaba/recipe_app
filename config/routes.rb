@@ -4,11 +4,16 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
   registrations: 'users/registrations'
 }
-  root 'users#index'
-  resources :users do
-    resources :recipes do
-      resources :recipe_food
+  resources :recipes do
+    member do
+      put 'toggle_public'
     end
+  end
+
+  root 'users#index'
+
+  resources :users do
+    resources :recipes
     resources :foods
   end
 end

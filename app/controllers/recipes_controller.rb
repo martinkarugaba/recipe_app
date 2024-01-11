@@ -24,7 +24,7 @@ class RecipesController < ApplicationController
 
     respond_to do |format|
       if @recipe.save
-        format.html { redirect_to @recipe, notice: 'Recipe was successfully created.' }
+        format.html { redirect_to recipes_path, notice: 'Recipe was successfully created.' }
         format.json { render :show, status: :created, location: @recipe }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,6 +43,17 @@ class RecipesController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # PUT /recipes/1/toggle_public
+  def toggle_public
+    @recipe = Recipe.find(params[:id])
+    @recipe.update(public: !@recipe.public)
+
+    respond_to do |format|
+      format.html { redirect_to @recipe, notice: 'Recipe visibility was successfully updated.' }
+      format.json { head :no_content }
     end
   end
 
