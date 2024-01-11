@@ -1,0 +1,30 @@
+<h1>Public Recipes</h1>
+
+<% if @public_recipes.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Recipe Name</th>
+        <th>Author</th>
+        <th>Total Food Items</th>
+        <th>Total Price</th>
+        <th>Details</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @public_recipes.each do |recipe| %>
+        <tr>
+          <td><%= recipe.name %></td>
+          <td><%= recipe.user_id %></td>
+          <td><%= recipe.food_items.count %></td>
+          <td><%= recipe.total_price %></td>
+          <td><%= link_to 'Details', recipe_path(recipe) %></td>
+          <td><%= button_to 'Remove', recipe_path(recipe), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No public recipes to display.</p>
+<% end %>

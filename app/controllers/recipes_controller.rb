@@ -33,6 +33,26 @@ class RecipesController < ApplicationController
     end
   end
 
+  def new_recipe_food
+    @recipe = Recipe.find(params[:id])
+    @recipe_food = @recipe.recipe_foods.new
+
+    respond_to do |format|
+      if @recipe_food.save
+        format.html { redirect_to @recipe, notice: 'Recipe food was successfully created.' }
+        format.json { render :show, status: :created, location: @recipe }
+      else
+        format.html { render :new_recipe_food, status: :unprocessable_entity }
+        format.json { render json: @recipe_food.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def generate_shopping_list
+    @recipe = Recipe.find(params[:id])
+    # Your code to generate the shopping list goes here
+  end
+
   # PATCH/PUT /recipes/1 or /recipes/1.json
   def update
     respond_to do |format|
@@ -55,6 +75,10 @@ class RecipesController < ApplicationController
       format.html { redirect_to @recipe, notice: 'Recipe visibility was successfully updated.' }
       format.json { head :no_content }
     end
+  end
+
+  def public_recipes
+    @public_recipes = Recipe.where(public: true).order(created_at: :desc)
   end
 
   def destroy
@@ -91,5 +115,9 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
+  end
+
+  def recipe_food_params
+    params.require(:recipe_food).permit(:food_id, :quantity)
   end
 end

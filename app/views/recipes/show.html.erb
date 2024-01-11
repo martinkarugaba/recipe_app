@@ -1,10 +1,26 @@
 <section class="text-center mt-5">
   <%= render @recipe %>
-
-  <div>
-    <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
-    <%= link_to "Back to recipes", recipes_path %>
-
-    <%= button_to "Delete this recipe", @recipe, method: :delete, class: "btn btn-danger" %>
+<div class="container my-5 ">
+  <div class="row">
+    <div class="d-flex justify-content-between col-md-6">
+      <%= button_to "Generate Shopping List", generate_shopping_list_recipe_path(@recipe), method: :post, class: "btn btn-primary" %>
+      <%= link_to "Add Ingredient", new_recipe_recipe_food_path(@recipe), class: "btn btn-success" %>
+    </div>
   </div>
-</section>
+</div>
+
+  <% if @recipe.recipe_foods.any? %>
+    <%= render partial: 'recipe_food_table' %>
+  <% else %>
+    <p>There are no foods for this recipe.</p>
+  <% end %>
+
+ <div class="container my-5">
+  <div class="row">
+    <div class="d-flex justify-content-between col-md-6">
+      <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
+      <%= link_to "Back to recipes", recipes_path %>
+      <%= button_to "Delete this recipe", @recipe, method: :delete, class: "btn btn-danger" %>
+    </div>
+  </div>
+</div>
