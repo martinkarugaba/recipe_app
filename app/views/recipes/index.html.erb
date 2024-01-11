@@ -22,7 +22,7 @@
               <%= link_to recipe.description, recipe %>
             </td>
             <td>
-              <%= link_to "Remove", recipe, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
+              <%= button_to "Remove", recipe, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
             </td>
           </tr>
         <% end %>
