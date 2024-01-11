@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_recipe, only: %i[show edit destroy]
-  before_action :authorize_user!, only: %i[edit destroy]
+  before_action :set_recipe, only: %i[show edit update destroy]
+  before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
     @recipes = Recipe.includes(:user).order(created_at: :desc)
@@ -30,6 +30,30 @@ class RecipesController < ApplicationController
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # PATCH/PUT /recipes/1 or /recipes/1.json
+  def update
+    respond_to do |format|
+      if @recipe.update(recipe_params)
+        format.html { redirect_to recipe_url(@recipe), notice: 'Recipe was successfully updated.' }
+        format.json { render :show, status: :ok, location: @recipe }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @recipe.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /recipes/1/toggle_public
+  def toggle_public
+    @recipe = Recipe.find(params[:id])
+    @recipe.update(public: !@recipe.public)
+
+    respond_to do |format|
+      format.html { redirect_to @recipe, notice: 'Recipe visibility was successfully updated.' }
+      format.json { head :no_content }
     end
   end
 
