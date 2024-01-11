@@ -21,7 +21,7 @@
         <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-primary", data: { turbo_method: :delete } %>
       <% else %>
       <li style="margin-right: 10px;"> 
-        <%= button_to "Sign in", new_user_session_path, class: "btn btn-primary" %>
+        <%= button_to "Log in", new_user_session_path, class: "btn btn-primary" %>
       </li>
       <li>
         <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
