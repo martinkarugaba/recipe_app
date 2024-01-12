@@ -13,6 +13,11 @@ Rails.application.routes.draw do
   end
 
   resources :foods
+  resources :shopping_list
+
+  resources :users do
+    get 'shopping_list', on: :member
+  end
 
   root 'foods#index'
 end

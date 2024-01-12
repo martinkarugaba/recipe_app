@@ -1,4 +1,4 @@
-<h1>Public Recipes</h1>
+<h1 class='text-center mt-5'>Public Recipes</h1>
 
 <% if @public_recipes.any? %>
 <div class='container mt-5'>
@@ -14,6 +14,7 @@
             <th>Cooking Time</th>
             <th>Description</th>
             <th>Details</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -24,7 +25,12 @@
               <td><%= recipe.preparation_time %></td>
               <td><%= recipe.cooking_time %></td>
               <td><%= recipe.description %></td>
-              <td><%= link_to 'Details', recipe_path(recipe) %></td>
+              <td><%= link_to 'Details', recipe_path(recipe), class: 'btn btn-primary' %></td>
+              <td>
+                <% if current_user == recipe.user %> <!-- Only show delete button to the owner -->
+                  <%= button_to 'Delete', recipe_path(recipe), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
