@@ -18,9 +18,9 @@
 
  <div class="container my-5">
   <div class="row">
-    <div class="d-flex justify-content-between col-md-6">
-      <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
-      <%= link_to "Back to recipes", recipes_path %>
+    <div class="d-flex justify-content-end align-content-center gap-5">
+      <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-primary" %>
+      <%= link_to "Back to recipes", recipes_path, class: "btn btn-secondary" %>
       <%= button_to "Delete this recipe", @recipe, method: :delete, class: "btn btn-danger" %>
     </div>
   </div>
