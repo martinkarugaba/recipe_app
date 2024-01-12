@@ -46,25 +46,29 @@ RSpec.describe RecipesController, type: :controller do
   end
 
   describe 'create' do
-  context 'with valid attributes' do
-    it 'creates a new recipe' do
-      expect {
-        post :create, params: { recipe: { name: 'Beef', preparation_time: '30 minutes', cooking_time: '2 hours', description: 'Tasty beef recipe' } }
-      }.to change(Recipe, :count).by(1)
-    end
+    context 'with valid attributes' do
+      it 'creates a new recipe' do
+        expect do
+          post :create,
+               params: { recipe: { name: 'Beef', preparation_time: '30 minutes', cooking_time: '2 hours',
+                                   description: 'Tasty beef recipe' } }
+        end.to change(Recipe, :count).by(1)
+      end
 
-    it 'redirects to the recipes index page after creation' do
-      post :create, params: { recipe: { name: 'Myanmar curry', preparation_time: '45 minutes', cooking_time: '2 hours', description: 'Tasty myanmar dish recipe' } }
-      expect(response).to redirect_to(recipes_path)
+      it 'redirects to the recipes index page after creation' do
+        post :create,
+             params: { recipe: { name: 'Myanmar curry', preparation_time: '45 minutes', cooking_time: '2 hours',
+                                 description: 'Tasty myanmar dish recipe' } }
+        expect(response).to redirect_to(recipes_path)
+      end
     end
-  end
 
 
     context 'with invalid attributes' do
       it 'does not create a new recipe' do
-        expect {
+        expect do
           post :create, params: { recipe: { name: '', preparation_time: '', cooking_time: '', description: '' } }
-        }.not_to change(Recipe, :count)
+        end.not_to change(Recipe, :count)
       end
 
       it 're-renders the new template' do
@@ -89,9 +93,9 @@ RSpec.describe RecipesController, type: :controller do
 
   describe 'destroy' do
     it 'deletes the recipe' do
-      expect {
+      expect do
         delete :destroy, params: { id: @recipe.id }
-      }.to change(Recipe, :count).by(-1)
+      end.to change(Recipe, :count).by(-1)
     end
 
     it 'redirects to the recipes index page after deletion' do

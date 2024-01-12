@@ -17,7 +17,7 @@ RSpec.describe FoodsController, type: :controller do
   end
 
   describe 'show' do
-    let(:food) { Food.create!(user: user, name: 'Tealeaf', measurement_unit: 'kg', price: 1000, quantity: 1) }
+    let(:food) { Food.create!(user:, name: 'Tealeaf', measurement_unit: 'kg', price: 1000, quantity: 1) }
 
     it 'returns a success response' do
       get :show, params: { id: food.id }
@@ -35,9 +35,9 @@ RSpec.describe FoodsController, type: :controller do
   describe 'create' do
     context 'with valid attributes' do
       it 'creates a new food item' do
-        expect {
+        expect do
           post :create, params: { food: { name: 'Beef', measurement_unit: 'kg', price: 9, quantity: 2 } }
-        }.to change(Food, :count).by(1)
+        end.to change(Food, :count).by(1)
       end
 
       it 'redirects to the created food item' do
@@ -48,9 +48,9 @@ RSpec.describe FoodsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not create a new food item' do
-        expect {
+        expect do
           post :create, params: { food: { name: '', measurement_unit: '', price: nil, quantity: nil } }
-        }.to_not change(Food, :count)
+        end.to_not change(Food, :count)
       end
 
       it 'renders the new template again' do
@@ -61,12 +61,12 @@ RSpec.describe FoodsController, type: :controller do
   end
 
   describe 'destroy' do
-    let!(:food_to_delete) { Food.create!(user: user, name: 'Beef', measurement_unit: 'kg', price: 9, quantity: 2) }
+    let!(:food_to_delete) { Food.create!(user:, name: 'Beef', measurement_unit: 'kg', price: 9, quantity: 2) }
 
     it 'deletes the food item if the current user owns it' do
-      expect {
+      expect do
         delete :destroy, params: { id: food_to_delete.id }
-      }.to change(Food, :count).by(-1)
+      end.to change(Food, :count).by(-1)
     end
 
     it 'redirects to the food index page after the deletion' do
