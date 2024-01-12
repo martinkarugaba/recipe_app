@@ -27,10 +27,10 @@ def login_user
     user_id: @user.id
   )
   visit new_user_session_path
-  click_button 'Log in', match: :first # Add match: :first to click the first matching button
+  click_button(class: 'signin-button', match: :first)
   fill_in 'user_email', with: 'user@gmail.com'
   fill_in 'user_password', with: 'password'
-  click_button 'Sign in'
+  click_button(class: 'signin-btn', match: :first)
 end
 # Add additional requires below this line. Rails is not loaded until this point!
 
