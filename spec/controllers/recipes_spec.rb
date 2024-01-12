@@ -63,7 +63,6 @@ RSpec.describe RecipesController, type: :controller do
       end
     end
 
-
     context 'with invalid attributes' do
       it 'does not create a new recipe' do
         expect do
