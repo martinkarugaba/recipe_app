@@ -6,6 +6,7 @@
     <div class="row">
       <div class="d-flex justify-content-end align-content-center gap-5">
         <%= button_to "Generate Shopping List", generate_shopping_list_recipe_path(@recipe), method: :post, class: "btn btn-primary" %>
+
         <% if current_user == @recipe.user %>
           <%= link_to "Add Ingredient", new_recipe_recipe_food_path(@recipe), class: "btn btn-success" %>
         <% end %>
