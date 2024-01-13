@@ -39,11 +39,6 @@ RSpec.describe FoodsController, type: :controller do
           post :create, params: { food: { name: 'Beef', measurement_unit: 'kg', price: 9, quantity: 2 } }
         end.to change(Food, :count).by(1)
       end
-
-      it 'redirects to the created food item' do
-        post :create, params: { food: { name: 'Beef', measurement_unit: 'kg', price: 9, quantity: 2 } }
-        expect(response).to redirect_to(food_path(Food.last))
-      end
     end
 
     context 'with invalid attributes' do

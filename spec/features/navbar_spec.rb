@@ -8,8 +8,8 @@ RSpec.feature 'Navbar', type: :feature do
       expect(page).to have_link('Recipe App', href: '#')
       expect(page).to have_link('Add Food', href: '/foods')
       expect(page).to have_link('Recipes List', href: '/recipes')
-      expect(page).to have_link('Public Recipes', href: '#')
-      expect(page).to have_link('Shopping List', href: '#')
+      expect(page).to have_link('Public Recipes', href: '/recipes/public_recipes')
+      expect(page).to have_link('Shopping List', href: '/shopping_list')
 
       expect(page).to have_button('Sign in')
       expect(page).to have_link('Sign up')

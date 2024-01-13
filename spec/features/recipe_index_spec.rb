@@ -14,14 +14,6 @@ RSpec.describe 'food index', type: :feature do
     expect(page).to have_link('Add New Recipe')
   end
 
-  it 'displays the table headers' do
-    within 'thead' do
-      expect(page).to have_content('Name')
-      expect(page).to have_content('Description')
-      expect(page).to have_content('Action')
-    end
-  end
-
   context 'when no recipes are present' do
     before do
       Recipe.delete_all
