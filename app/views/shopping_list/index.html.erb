@@ -1,2 +1,14 @@
+<h1>Shopping List</h1>
 
-<h1>Shopping list index</h1>
+<% if @shopping_list_items.any? %>
+  <ul>
+    <% @shopping_list_items.each do |food| %>
+      <li><%= food.name %> - <%= number_to_currency(food.price) %></li>
+    <% end %>
+  </ul>
+
+  <p>Total Items: <%= @shopping_list_items.size %></p>
+  <p>Total Price: <%= number_to_currency(@shopping_list_items.sum(&:price)) %></p>
+<% else %>
+  <p>No items found in the shopping list.</p>
+<% end %>

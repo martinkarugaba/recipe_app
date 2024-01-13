@@ -12,10 +12,10 @@
         <a class="nav-link" href="/recipes">Recipes List</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Public Recipes</a>
+        <%= link_to 'Public Recipes', public_recipes_recipes_path, class: 'nav-link' %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Shopping List</a>
+        <%= link_to 'Shopping List', shopping_list_index_path, class: 'nav-link' %>
       </li>
       <% if user_signed_in? %>
         <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-primary", data: { turbo_method: :delete } %>

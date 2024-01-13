@@ -1,19 +1,23 @@
 Rails.application.routes.draw do
-  resources :recipes
-  resources :foods
+
   devise_for :users, controllers: {
-  registrations: 'users/registrations'
-}
+    registrations: 'users/registrations'
+  }
+
   resources :recipes do
-    member do
-      put 'toggle_public'
-    end
+    put 'toggle_public', on: :member
+    get 'public_recipes', on: :collection
+    post 'generate_shopping_list', on: :member
+
+    resources :recipe_foods
   end
 
-  root 'users#index'
+  resources :foods
+  resources :shopping_list
 
   resources :users do
-    resources :recipes
-    resources :foods
+    get 'shopping_list', on: :member
   end
+
+  root 'foods#index'
 end

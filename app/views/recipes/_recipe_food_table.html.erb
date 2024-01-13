@@ -1,0 +1,31 @@
+<div class="card mt-5">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Food</th>
+            <th>Quantity</th>
+            <th>Value</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @recipe.recipe_foods.each do |recipe_food| %>
+            <tr>
+              <td><%= recipe_food.food.name %></td>
+              <td><%= recipe_food.quantity %></td>
+              <td><%= recipe_food.quantity && recipe_food.food.price ? recipe_food.quantity * recipe_food.food.price : 'N/A' %></td>
+              <td>
+                <div class="d-flex justify-content-center align-items-center">
+                  <%= button_to 'Modify', edit_recipe_recipe_food_path(@recipe, recipe_food), method: :get, class: 'btn btn-primary mr-4' %>
+                  <%= button_to 'Delete', recipe_recipe_food_path(@recipe, recipe_food), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger mx-4' %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

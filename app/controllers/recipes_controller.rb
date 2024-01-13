@@ -20,20 +20,47 @@ class RecipesController < ApplicationController
 
   # POST /recipes or /recipes.json
   def create
-    @recipe = current_user.recipes.new(recipe_params)
+    @recipe = Recipe.find(params[:recipe_id])
+    @recipe_food = @recipe.recipe_foods.new(recipe_food_params)
+
+    if @recipe_food.save
+      redirect_to recipe_path(@recipe), notice: 'Recipe food was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  def new_recipe_food
+    @recipe = Recipe.find(params[:id])
+    @recipe_food = @recipe.recipe_foods.new
 
     respond_to do |format|
-      if @recipe.save
-        format.html { redirect_to recipes_path, notice: 'Recipe was successfully created.' }
+      if @recipe_food.save
+        format.html { redirect_to @recipe, notice: 'Recipe food was successfully created.' }
         format.json { render :show, status: :created, location: @recipe }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @recipe.errors, status: :unprocessable_entity }
+        format.html { render :new_recipe_food, status: :unprocessable_entity }
+        format.json { render json: @recipe_food.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /recipes/1 or /recipes/1.json
+  def generate_shopping_list
+    @recipe = Recipe.find(params[:id])
+    @user = current_user
+    @general_food_list = @user.foods
+    @missing_food_items = []
+
+    @recipe.foods.each do |food|
+      @missing_food_items << food unless @general_food_list.include?(food)
+    end
+
+    @user.shopping_list = @missing_food_items
+    @user.save
+
+    redirect_to shopping_list_user_path(@user)
+  end
+
   def update
     respond_to do |format|
       if @recipe.update(recipe_params)
@@ -46,7 +73,6 @@ class RecipesController < ApplicationController
     end
   end
 
-  # PUT /recipes/1/toggle_public
   def toggle_public
     @recipe = Recipe.find(params[:id])
     @recipe.update(public: !@recipe.public)
@@ -55,6 +81,10 @@ class RecipesController < ApplicationController
       format.html { redirect_to @recipe, notice: 'Recipe visibility was successfully updated.' }
       format.json { head :no_content }
     end
+  end
+
+  def public_recipes
+    @public_recipes = Recipe.where(public: true).order(created_at: :desc)
   end
 
   def destroy
@@ -91,5 +121,9 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
+  end
+
+  def recipe_food_params
+    params.require(:recipe_food).permit(:food_id, :quantity)
   end
 end

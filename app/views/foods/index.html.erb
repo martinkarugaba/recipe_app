@@ -6,27 +6,8 @@
       </div>
 
       <% if @foods.any? %>
-        <div class="card">
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead class="thead-dark">
-                  <tr>
-                    <th>Food</th>
-                    <th>Measurement Unit</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @foods.each do |food| %>
-                    <%= render partial: 'food', locals: { food: food } %>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div class="card-body">
+          <%= render partial: 'shared/foods_table', locals: { foods: @foods } %>
         </div>
       <% else %>
         <div class="text-center" data-testid="no-foods-message">
