@@ -7,24 +7,19 @@ class RecipesController < ApplicationController
     @recipes = Recipe.includes(:user).order(created_at: :desc)
   end
 
-  # GET /recipes/1 or /recipes/1.json
   def show; end
 
-  # GET /recipes/new
   def new
     @recipe = current_user.recipes.new
   end
 
-  # GET /recipes/1/edit
   def edit; end
 
-  # POST /recipes or /recipes.json
   def create
-    @recipe = Recipe.find(params[:recipe_id])
-    @recipe_food = @recipe.recipe_foods.new(recipe_food_params)
+    @recipe = current_user.recipes.new(recipe_params)
 
-    if @recipe_food.save
-      redirect_to recipe_path(@recipe), notice: 'Recipe food was successfully created.'
+    if @recipe.save
+      redirect_to recipes_path, notice: 'Recipe was successfully created.'
     else
       render :new
     end
