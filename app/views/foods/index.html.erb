@@ -10,7 +10,7 @@
           <%= render partial: 'shared/foods_table', locals: { foods: @foods } %>
         </div>
       <% else %>
-        <div class="text-center">
+        <div class="text-center" data-testid="no-foods-message">
           <p>No foods available.</p>
         </div>
       <% end %>
