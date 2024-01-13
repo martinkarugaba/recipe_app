@@ -1,23 +1,25 @@
-<div id="<%= dom_id(recipe) %>" class="container text-">
-  <%= form_with(url: toggle_public_recipe_path(recipe), method: :put, local: true) do |form| %>
-    <%= form.check_box :public, onchange: 'this.form.submit()', checked: recipe.public %>
-    <%= form.label :public, 'Public' %>
-  <% end %>
-
-  <div id="<%= dom_id(recipe) %>" class="container text-left">
-    <p>
+<div id="<%= dom_id(recipe) %>" class="container col-6 d-flex justify-content-between align-content-start">
+  <div id="<%= dom_id(recipe) %>" class="text-start">
+    <p class='text-start'>
       <strong>Preparation Time:</strong>
       <%= recipe.preparation_time %> minutes
     </p>
 
-    <p>
+    <p class='text-start'>
       <strong>Cooking Time:</strong>
       <%= recipe.cooking_time %> minutes
     </p>
 
-    <p>
+    <p class='text-start'>
       <strong>Description:</strong>
       <%= recipe.description %>
     </p>
+  </div>
+
+  <div>
+    <%= form_with(url: toggle_public_recipe_path(recipe), method: :put, local: true) do |form| %>
+      <%= form.check_box :public, onchange: 'this.form.submit()', checked: recipe.public %>
+      <%= form.label :public, 'Public' %>
+    <% end %>
   </div>
 </div>
