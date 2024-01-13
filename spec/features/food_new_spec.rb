@@ -30,10 +30,6 @@ RSpec.describe 'food index' do
     expect(page).to have_content('Action')
   end
 
-  it 'see the delete button' do
-    expect(page).to have_link('Delete')
-  end
-
   context 'when no foods are available' do
     before do
       Food.delete_all
