@@ -4,7 +4,7 @@ class RecipesController < ApplicationController
   before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
-    @recipes = Recipe.includes(:user).order(created_at: :desc)
+    @recipes = current_user.recipes.order(created_at: :desc)
   end
 
   def show; end

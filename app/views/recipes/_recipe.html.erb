@@ -1,4 +1,9 @@
 <div id="<%= dom_id(recipe) %>" class="container text-">
+  <%= form_with(url: toggle_public_recipe_path(recipe), method: :put, local: true) do |form| %>
+    <%= form.check_box :public, onchange: 'this.form.submit()', checked: recipe.public %>
+    <%= form.label :public, 'Public' %>
+  <% end %>
+
   <div id="<%= dom_id(recipe) %>" class="container text-left">
     <p>
       <strong>Preparation Time:</strong>
