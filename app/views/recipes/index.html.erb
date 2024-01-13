@@ -1,54 +1,35 @@
 <h1 class='text-center mt-5'>Recipes</h1>
 
-<style>
-  .recipe-item {
-    display: flex;
-    flex-direction: column; 
-    gap: 10px;
-    padding: 10px; 
-  }
-  
-  .name-and-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .description-container {
-    word-wrap: break-word; 
-    text-align: left; 
-  }
-  
-  .bold-name {
-    font-weight: bold; 
-  }
-</style>
-
-<div class="container mt-5">
-  <div class="text-right mb-3 d-flex justify-content-end align-content-center">
+<div class='container d-flex justify-content-center align-content-center mt-3'>
+  <div class="text-right col-8 d-flex justify-content-end align-content-center">
     <%= link_to "Add New Recipe", new_recipe_path, class: "btn btn-success" %>
   </div>
+</div>
 
-  <% if @recipes.any? %>
-    <div class="card">
+<% if @recipes.any? %>
+  <% @recipes.each do |recipe| %>
+  <div class='container d-flex justify-content-center align-content-center mt-4'>
+    <div class="card col-8 m-auto">
       <div class="card-body">
-        <% @recipes.each do |recipe| %>
-          <div class="recipe-item">
-            <div class="name-and-button">
-              <span class="bold-name"><%= recipe.name %></span>
-              <%= button_to "Remove", recipe, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
-            </div>
-            <div class="description-container">
-              <%= recipe.description %>
-            </div>
+        <div class="recipe d-flex justify-content-between align-content-center">
+          <div>
+          <%= link_to recipe_path(recipe), class: "col-12 m-auto text-decoration-none text-black" do %>
+            <h3 class="text-center"><%= recipe.name %></h3>
+          <% end %>
+            <div><%= button_to "Remove", recipe, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm mt-2" %></div>
           </div>
-          <hr> 
-        <% end %>
+          <div>
+          <%= link_to recipe_path(recipe), class: "col-12 m-auto text-decoration-none text-black" do %>
+            <p><%= recipe.description %></p>
+          <% end %>
+          </div>
+        </div>
       </div>
     </div>
-  <% else %>
-    <div class="text-center" data-testid="no-recipes-message">
-      <p>No recipes found.</p>
     </div>
   <% end %>
-</div>
+<% else %>
+  <div class="text-center" data-testid="no-recipes-message">
+    <p>No recipes found.</p>
+  </div>
+<% end %>

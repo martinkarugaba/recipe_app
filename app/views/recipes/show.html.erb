@@ -2,18 +2,14 @@
 
 <section class="text-center mt-5">
   <%= render @recipe %>
-  <div class="container my-5 ">
-    <div class="row">
-      <div class="d-flex justify-content-end align-content-center gap-5">
-        <%= button_to "Generate Shopping List", generate_shopping_list_recipe_path(@recipe), method: :post, class: "btn btn-primary" %>
+  <div class="container col-6 d-flex justify-content-between align-content-center my-5">
+    <%= button_to "Generate Shopping List", generate_shopping_list_recipe_path(@recipe), method: :post, class: "btn btn-primary" %>
 
-        <% if current_user == @recipe.user %>
-          <%= link_to "Add Ingredient", new_recipe_recipe_food_path(@recipe), class: "btn btn-success" %>
-        <% end %>
-      </div>
-    </div>
+    <% if current_user == @recipe.user %>
+      <%= link_to "Add Ingredient", new_recipe_recipe_food_path(@recipe), class: "btn btn-success" %>
+    <% end %>
   </div>
-  <div class='container'>
+  <div class='container col-6'>
     <% if @recipe.recipe_foods.any? %>
       <%= render partial: 'recipe_food_table' %>
     <% else %>
@@ -21,13 +17,10 @@
     <% end %>
   </div>
 
-  <div class="container my-5">
-    <div class="row">
-      <div class="d-flex justify-content-end align-content-center gap-5">
-        <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-primary" %>
-        <%= link_to "Back to recipes", recipes_path, class: "btn btn-secondary" %>
-        <%= button_to "Delete this recipe", @recipe, method: :delete, class: "btn btn-danger" %>
-      </div>
-    </div>
+  <div class="container col-6 mt-5 d-flex justify-content-end align-content-center gap-5">
+    <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-primary" %>
+    <%= link_to "Back to recipes", recipes_path, class: "btn btn-secondary" %>
+    <%= button_to "Delete this recipe", @recipe, method: :delete, class: "btn btn-danger" %>
+  </div>
   </div>
 </section>

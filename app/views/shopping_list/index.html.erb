@@ -1,9 +1,10 @@
-<h1>Shopping List</h1>
+<h1 class='text-center mt-5'>Shopping List</h1>
 
+<div class='container col-6 mt-4'>
 <% if @shopping_list_items.any? %>
   <ul>
     <% @shopping_list_items.each do |food| %>
-      <li><%= food.name %> - <%= number_to_currency(food.price) %></li>
+      <li class='text-center'><%= food.name %> - <%= number_to_currency(food.price) %></li>
     <% end %>
   </ul>
 
@@ -12,3 +13,4 @@
 <% else %>
   <p>No items found in the shopping list.</p>
 <% end %>
+</div>
